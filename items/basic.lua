@@ -12,7 +12,18 @@ end
 register_flammable_item("exile_alchemy:salt", S("Salt"), "exile_alchemy_salt.png")
 register_flammable_item("exile_alchemy:alcohol", S("Alcohol"), "exile_alchemy_alcohol.png")
 register_flammable_item("exile_alchemy:sugar", S("Sugar"), "exile_alchemy_sugar.png")
-register_flammable_item("exile_alchemy:vinegar", S("Vinegar"), "exile_alchemy_vinegar.png")
+
+minetest.register_craftitem("exile_alchemy:vinegar", {
+	description = S("Vinegar"),
+	inventory_image = "exile_alchemy_vinegar.png",
+	stack_max = minimal.stack_max_medium * 2,
+	groups = { flammable = 1 },
+
+	on_use = function(itemstack, user, pointed_thing)
+		exile_alchemy.add_effect(user, "nausea", 2)
+		return HEALTH.use_item(itemstack, user, 0, 5, -5, -15, 0)
+	end,
+})
 
 minetest.register_craftitem("exile_alchemy:dregs", {
 	description = S("Dregs"),

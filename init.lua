@@ -5,6 +5,7 @@ exile_alchemy = rawget(_G, "exile_alchemy") or {}
 dofile(modpath .. "/nodes/nodeboxes.lua")
 dofile(modpath .. "/common/fermentation.lua")
 dofile(modpath .. "/common/alembic.lua")
+dofile(modpath .. "/common/effects.lua")
 dofile(modpath .. "/items/basic.lua")
 dofile(modpath .. "/items/mashed_wiha.lua")
 dofile(modpath .. "/nodes/alembic.lua")

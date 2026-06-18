@@ -78,8 +78,7 @@ local function drink_wiha_cider(pos, clicker)
 	meta:set_int("energy", minimal.math_clamp(meta:get_int("energy") + 40, 1000, 0))
 	meta:set_int("hunger", minimal.math_clamp(meta:get_int("hunger") + 20, 1000, 0))
 
-	-- TODO: Nausea — use {"Nausea", 1} when that effect exists in health.
-	HEALTH.add_new_effect(clicker, { "Food Poisoning", 1 })
+	exile_alchemy.add_effect(clicker, "nausea", 1)
 
 	minetest.swap_node(pos, { name = "tech:clay_water_pot" })
 	minetest.sound_play("nodes_nature_slurp", {
