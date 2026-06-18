@@ -1,0 +1,23 @@
+# textdomain: exile_alchemy
+
+Salt=
+Alcohol=
+Sugar=
+Vinegar=
+Dregs=
+Clear Glass Tube=
+Mashed Wiha=
+Ceramic Alembic=
+Ceramic Alembic (unfired)=
+Wiha Must (unfermented)=
+Wiha Wine=
+Wiha Cider=
+Clay Pot With Dregs=
+Processing: @1=
+Processing: Nothing=
+Temperature too low=
+Temperature too high=
+Processing @1=
+Inactive=
+empty=
+To distill products, place the alembic over a clay pot filled with liquids and apply heat.=
