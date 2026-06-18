@@ -64,7 +64,7 @@ alembic_processes = {
     },
     ["tech:tang"] = {
         products = { "tech:alcohol 1" },
-        subproduct = "tech:clay_amphora_freshwater",
+        subproduct = "tech_water_pot,
         time = 180,
     },
     ["tech:clay_water_pot_freshwater"] = {
@@ -72,35 +72,20 @@ alembic_processes = {
         subproduct = "tech:clay_water_pot",
         time = 60,
     },
-    ["tech:wiha_must_pot"] = {
+    ["exile_alchemy:wiha_must_pot"] = {
         products = { "tech:sugar 12" },
-        subproduct = "tech:clay_amphora_freshwater",
+        subproduct = "exile_alchemy:_dry",
         time = 90,
     },
-    ["tech:wiha_cider_pot"] = {
-        products = { "tech:wiha_dregs" },
-        subproduct = "tech:vinegar_pot",
-        time = 150,
-    },
-    ["tech:acrimoniac_amphora"] = {
-        products = { "tech:death_salt" },
-        subproduct = "tech:clay_amphora",
-        time = 150,
-    },
-    ["tech:tartaris_syrup_amphora"] = {
-        products = { "tech:alcohol 12" },
-        subproduct = "tech:clay_amphora",
+    ["exile_alchemy:wiha_cider_pot"] = {
+        products = { "exile_alchemy:vinegar" },
+        subproduct = "exile_alchemy:wiha_must_pot",
         time = 150,
     },
     ["tech:tang_unfermented"] = {
-        products = { "tech:sugar 12" },
-        subproduct = "tech:clay_amphora_freshwater",
+        products = { "exile_alchemy:sugar 12" },
+        subproduct = "exile_alchemy:wiha_must_pot",
         time = 90,
-    },
-    ["tech:clay_water_pot_potash"] = {
-        products = { "tech:potash" },
-        subproduct = "tech:clay_water_pot",
-        time = 60,
     },
 }
 
