@@ -37,30 +37,19 @@ minetest.register_node("exile_alchemy:alembic", {
 		type = "fixed",
 		fixed = exile_alchemy.alambic_nodebox,
 	},
-	liquids_pointable = true,
 	groups = { cracky = 3, oddly_breakable_by_hand = 3, temp_pass = 1 },
 	sounds = nodes_nature.node_sound_stone_defaults(),
 
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:get_inventory():set_size("main", exile_alchemy.alembic_inv_size)
+		meta:set_float("remaining", 0)
+		meta:set_string("process_source", "")
 		exile_alchemy.update_alembic_infotext(pos)
 		minetest.get_node_timer(pos):start(exile_alchemy.alembic_check_interval)
 	end,
 
 	on_timer = exile_alchemy.alembic_process,
-
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		if not clicker or not clicker:is_player() then
-			return itemstack
-		end
-		minetest.show_formspec(
-			clicker:get_player_name(),
-			"exile_alchemy:alembic",
-			exile_alchemy.get_alembic_formspec(pos)
-		)
-		return itemstack
-	end,
 
 	on_destruct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -74,19 +63,4 @@ minetest.register_node("exile_alchemy:alembic", {
 			end
 		end
 	end,
-
-	allow_metadata_inventory_move = function()
-		return 0
-	end,
-
-	allow_metadata_inventory_put = function()
-		return 0
-	end,
 })
-
-minetest.register_on_player_receive_fields(function(player, formname, fields)
-	if formname ~= "exile_alchemy:alembic" then
-		return
-	end
-	-- Inventory changes refresh via timer; no extra fields yet.
-end)

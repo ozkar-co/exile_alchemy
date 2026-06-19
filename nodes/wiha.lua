@@ -17,7 +17,7 @@ liquid_store.register_stored_liquid(
 	"exile_alchemy:wiha_wine_liquid",
 	"exile_alchemy:wiha_wine_pot",
 	"tech:clay_water_pot",
-	exile_alchemy.pot_tiles("exile_alchemy_pot_wiha_must.png"),
+	exile_alchemy.pot_tiles("exile_alchemy_pot_wiha_wine.png"),
 	exile_alchemy.pot_nodebox,
 	S("Wiha Wine"),
 	pot_groups
@@ -46,10 +46,10 @@ exile_alchemy.register_ferment_overrides("exile_alchemy:wiha_wine_pot", {
 	end,
 })
 
-local function drink_wiha_wine(pos, clicker)
-	local meta = clicker:get_meta()
+local function drink_wiha_wine(player)
+	local meta = player:get_meta()
 	if meta:get_int("thirst") >= 100 then
-		return
+		return false
 	end
 
 	meta:set_int("thirst", 100)
@@ -57,52 +57,86 @@ local function drink_wiha_wine(pos, clicker)
 	meta:set_int("hunger", minimal.math_clamp(meta:get_int("hunger") + 40, 1000, 0))
 
 	if random() < 0.75 then
-		HEALTH.add_new_effect(clicker, { "Drunk", 1 })
+		HEALTH.add_new_effect(player, { "Drunk", 1 })
 	end
 
-	minetest.swap_node(pos, { name = "tech:clay_water_pot" })
 	minetest.sound_play("nodes_nature_slurp", {
-		pos = pos,
+		pos = player:get_pos(),
 		max_hear_distance = 3,
 		gain = 0.25,
 	})
+	return true
 end
 
-local function drink_wiha_cider(pos, clicker)
-	local meta = clicker:get_meta()
+local function drink_wiha_cider(player)
+	local meta = player:get_meta()
 	if meta:get_int("thirst") >= 100 then
-		return
+		return false
 	end
 
 	meta:set_int("thirst", minimal.math_clamp(meta:get_int("thirst") + 60, 100, 0))
 	meta:set_int("energy", minimal.math_clamp(meta:get_int("energy") + 40, 1000, 0))
 	meta:set_int("hunger", minimal.math_clamp(meta:get_int("hunger") + 20, 1000, 0))
 
-	exile_alchemy.add_effect(clicker, "nausea", 1)
+	exile_alchemy.add_effect(player, "nausea", 1)
 
-	minetest.swap_node(pos, { name = "tech:clay_water_pot" })
 	minetest.sound_play("nodes_nature_slurp", {
-		pos = pos,
+		pos = player:get_pos(),
 		max_hear_distance = 3,
 		gain = 0.25,
 	})
+	return true
 end
 
-minetest.override_item("exile_alchemy:wiha_wine_pot", {
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		if clicker and clicker:is_player() then
-			drink_wiha_wine(pos, clicker)
-		end
-	end,
-})
+local function register_drinkable_pot(pot_name, liquid_source, empty_pot, drink_fn)
+	minetest.override_item(pot_name, {
+		on_use = function(itemstack, user, pointed_thing)
+			if pointed_thing.type ~= "node" then
+				if minetest.is_player(user) and drink_fn(user) then
+					if minimal.player_in_creative(user) then
+						return itemstack
+					end
+					return ItemStack(empty_pot)
+				end
+				return itemstack
+			end
+			return liquid_store.on_use_filled_bucket(
+				liquid_source,
+				empty_pot,
+				itemstack,
+				user,
+				pointed_thing,
+				false
+			)
+		end,
 
-minetest.override_item("exile_alchemy:wiha_cider_pot", {
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		if clicker and clicker:is_player() then
-			drink_wiha_cider(pos, clicker)
-		end
-	end,
-})
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+			if not clicker or not clicker:is_player() then
+				return
+			end
+			if not itemstack:is_empty() then
+				return
+			end
+			if drink_fn(clicker) then
+				minetest.swap_node(pos, { name = empty_pot })
+			end
+		end,
+	})
+end
+
+register_drinkable_pot(
+	"exile_alchemy:wiha_wine_pot",
+	"exile_alchemy:wiha_wine_liquid",
+	"tech:clay_water_pot",
+	drink_wiha_wine
+)
+
+register_drinkable_pot(
+	"exile_alchemy:wiha_cider_pot",
+	"exile_alchemy:wiha_cider_liquid",
+	"tech:clay_water_pot",
+	drink_wiha_cider
+)
 
 minetest.register_node("exile_alchemy:dregs_pot", {
 	description = S("Clay Pot With Dregs"),

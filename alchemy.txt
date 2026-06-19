@@ -40,20 +40,20 @@ Procesos de Extraccion que necesitar revisarse:
     • Polvora de la mezcla de Azufre, Nitrato de Potasio, Carbon y Azucar
     • Carbonato de Calcio extraido de la calcinacion y triturado de coonchas de mar
     • Amoniaco de los Lixiviados de origen animal.
-    • Azufre extraido de la Arena Volcanica
-    • Alumina (Oxido de Aluminio) extraida del Feldespato
-    • nitrato de sodio de la destilacion del agua de Mar
-    • Nitrato de Potasio de la potasa y el nitrato de sodio
-    • Carbonato de Potasio extraido de la Potasa y la Calcita
-    • Acido Sulfurico
-    • Jabon obtenido mediante la saponificación de la Pasta de Jabon
-    • Soda Caustica (hidróxido sódico)
-    • Pasta de Jabon formada de la mezca de Aceites Vegetales, Carbonato de Potasio, Sal y Soda Caustica
-    • Carbon activado de la Calcinacion del Carbon y su posterior mezcla con Vinagre
-    • Aluminio extraido de la Alumina
-    • Acido Sulfurico de la Mezcla de Azufre, hierro y agua
-    • Soda Caustica extraida de la Cal Viva mezclada con Amoniaco
-    • Acido Nitrico de Amoniaco, Nitrato de Potasio y Agua
+        • Azufre extraido de la Arena Volcanica
+        • Alumina (Oxido de Aluminio) extraida del Feldespato
+        • nitrato de sodio de la destilacion del agua de Mar
+        • Nitrato de Potasio de la potasa y el nitrato de sodio
+        • Carbonato de Potasio extraido de la Potasa y la Calcita
+        • Acido Sulfurico
+        • Jabon obtenido mediante la saponificación de la Pasta de Jabon
+        • Soda Caustica (hidróxido sódico)
+        • Pasta de Jabon formada de la mezca de Aceites Vegetales, Carbonato de Potasio, Sal y Soda Caustica
+        • Carbon activado de la Calcinacion del Carbon y su posterior mezcla con Vinagre
+        • Aluminio extraido de la Alumina
+        • Acido Sulfurico de la Mezcla de Azufre, hierro y agua
+        • Soda Caustica extraida de la Cal Viva mezclada con Amoniaco
+        • Acido Nitrico de Amoniaco, Nitrato de Potasio y Agua
     • Agua Regia del Acido Nitrico y Acido Clorhidrico
     • Carbonato de Sodio de Calcita, Potasa y Sal
     • Agua Carbonatada de mezclar carbonato de sodio, vinagre y agua

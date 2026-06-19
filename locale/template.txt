@@ -25,3 +25,5 @@ Sour Revulsion=
 (queasy)=
 (nauseous)=
 (wretching)=
+Wrong product in alembic=
+Alembic full=
