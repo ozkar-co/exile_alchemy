@@ -9,9 +9,47 @@ local function register_flammable_item(name, desc, texture)
 	})
 end
 
-register_flammable_item("exile_alchemy:salt", S("Salt"), "exile_alchemy_salt.png")
+local function eat_with_binge(itemstack, user, thirst, hunger, energy, binge_key, effect_id)
+	if not minetest.is_player(user) then
+		return itemstack
+	end
+
+	local stack = HEALTH.use_item(itemstack, user, 0, thirst, hunger, energy, 0)
+	if stack == nil then
+		return
+	end
+
+	if exile_alchemy.record_binge(user, binge_key) then
+		local severity = exile_alchemy.has_effect(user, effect_id) and 2 or 1
+		exile_alchemy.add_effect(user, effect_id, severity)
+	end
+
+	return stack
+end
+
+minetest.register_craftitem("exile_alchemy:salt", {
+	description = S("Salt"),
+	inventory_image = "exile_alchemy_salt.png",
+	stack_max = minimal.stack_max_medium * 2,
+	groups = { flammable = 1 },
+
+	on_use = function(itemstack, user, pointed_thing)
+		return eat_with_binge(itemstack, user, -4, 2, 0, "salt", "salt_sickness")
+	end,
+})
+
+minetest.register_craftitem("exile_alchemy:sugar", {
+	description = S("Sugar"),
+	inventory_image = "exile_alchemy_sugar.png",
+	stack_max = minimal.stack_max_medium * 2,
+	groups = { flammable = 1 },
+
+	on_use = function(itemstack, user, pointed_thing)
+		return eat_with_binge(itemstack, user, 0, 10, 40, "sugar", "sugar_overload")
+	end,
+})
+
 register_flammable_item("exile_alchemy:alcohol", S("Alcohol"), "exile_alchemy_alcohol.png")
-register_flammable_item("exile_alchemy:sugar", S("Sugar"), "exile_alchemy_sugar.png")
 
 minetest.register_craftitem("exile_alchemy:vinegar", {
 	description = S("Vinegar"),
