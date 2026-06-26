@@ -1,37 +1,52 @@
 local S = minetest.get_translator("exile_alchemy")
 local random = math.random
 
+crafting.register_group_desc("wiha_vinegar", S("Wiha Vinegar"))
+
 local pot_groups = { dig_immediate = 2, pottery = 1, temp_pass = 1, drug = 1 }
 
-liquid_store.register_stored_liquid(
-	"exile_alchemy:wiha_must_liquid",
-	"exile_alchemy:wiha_must_pot",
-	"tech:clay_water_pot",
-	exile_alchemy.pot_tiles("exile_alchemy_pot_wiha_must.png"),
-	exile_alchemy.pot_nodebox,
-	S("Wiha Must (unfermented)"),
-	pot_groups
-)
+liquid_store.register_liquid("exile_alchemy:wiha_must_liquid", {
+	flowing = false,
+	force_renew = false,
+})
 
-liquid_store.register_stored_liquid(
-	"exile_alchemy:wiha_wine_liquid",
-	"exile_alchemy:wiha_wine_pot",
-	"tech:clay_water_pot",
-	exile_alchemy.pot_tiles("exile_alchemy_pot_wiha_wine.png"),
-	exile_alchemy.pot_nodebox,
-	S("Wiha Wine"),
-	pot_groups
-)
+liquid_store.register_stored_liquid("exile_alchemy:wiha_must_pot", {
+	source = "exile_alchemy:wiha_must_liquid",
+	empty = "tech:clay_water_pot",
+	description = S("Wiha Must (unfermented)"),
+	add_liquid_tile = "exile_alchemy_pot_wiha_must.png",
+	node_box = "container",
+	groups = pot_groups,
+})
 
-liquid_store.register_stored_liquid(
-	"exile_alchemy:wiha_cider_liquid",
-	"exile_alchemy:wiha_cider_pot",
-	"tech:clay_water_pot",
-	exile_alchemy.pot_tiles("exile_alchemy_pot_wiha_cider.png"),
-	exile_alchemy.pot_nodebox,
-	S("Wiha Cider"),
-	pot_groups
-)
+liquid_store.register_liquid("exile_alchemy:wiha_wine_liquid", {
+	flowing = false,
+	force_renew = false,
+})
+
+liquid_store.register_stored_liquid("exile_alchemy:wiha_wine_pot", {
+	source = "exile_alchemy:wiha_wine_liquid",
+	empty = "tech:clay_water_pot",
+	description = S("Wiha Wine"),
+	add_liquid_tile = "exile_alchemy_pot_wiha_wine.png",
+	node_box = "container",
+	groups = pot_groups,
+})
+
+liquid_store.register_liquid("exile_alchemy:wiha_cider_liquid", {
+	flowing = false,
+	force_renew = false,
+	groups = { "vinegar", "wiha_vinegar" },
+})
+
+liquid_store.register_stored_liquid("exile_alchemy:wiha_cider_pot", {
+	source = "exile_alchemy:wiha_cider_liquid",
+	empty = "tech:clay_water_pot",
+	description = S("Wiha Cider (Vinegar)"),
+	add_liquid_tile = "exile_alchemy_pot_wiha_cider.png",
+	node_box = "container",
+	groups = { dig_immediate = 2, pottery = 1, temp_pass = 1 },
+})
 
 exile_alchemy.register_ferment_overrides("exile_alchemy:wiha_must_pot", {
 	on_complete = function(pos)

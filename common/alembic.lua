@@ -37,10 +37,22 @@ exile_alchemy.alembic_processes = {
 		product_label = S("Sugar"),
 	},
 	["exile_alchemy:wiha_cider_pot"] = {
-		products = { "exile_alchemy:vinegar 1" },
+		products = { "exile_alchemy:acetic_acid 1" },
 		subproduct = "exile_alchemy:dregs_pot",
 		time = 150,
-		product_label = S("Vinegar"),
+		product_label = S("Acetic Acid"),
+	},
+	["tech:tang_vinegar"] = {
+		products = { "exile_alchemy:acetic_acid 1" },
+		subproduct = "tech:clay_water_pot",
+		time = 150,
+		product_label = S("Acetic Acid"),
+	},
+	["tech:wooden_tang_vinegar"] = {
+		products = { "exile_alchemy:acetic_acid 1" },
+		subproduct = "tech:wooden_water_pot",
+		time = 150,
+		product_label = S("Acetic Acid"),
 	},
 }
 

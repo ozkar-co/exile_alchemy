@@ -30,7 +30,8 @@ Materiales Extraidos:
         • Alcohol de la fermentación y evaporacion de extractos de Frutas
         • Lixiviados de la Composta producida por gusanos e insectos
         • Compost de origen vegetal producido por descomposicion
-        • Vinagre producido por el añejamiento de extractos de frutas mezcladas con hongos
+        • Vinagre en olla (group:vinegar): Tang del juego base o sidra de wiha por fermentación
+        • Ácido acético concentrado: destilación en alambique desde olla de vinagre (Tang o wiha)
         • Fosfato de calcio de la calcinacion de la harina de hueso
 
 Procesos de Extraccion que necesitar revisarse:
