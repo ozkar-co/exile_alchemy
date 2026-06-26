@@ -63,4 +63,6 @@ minetest.register_node("exile_alchemy:alembic", {
 			end
 		end
 	end,
+
+	on_infotext = exile_alchemy.alembic_on_infotext,
 })

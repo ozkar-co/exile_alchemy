@@ -4,7 +4,7 @@ local function register_flammable_item(name, desc, texture)
 	minetest.register_craftitem(name, {
 		description = desc,
 		inventory_image = texture,
-		stack_max = minimal.stack_max_medium * 2,
+		stack_max = EXILE.stack_max_medium * 2,
 		groups = { flammable = 1 },
 	})
 end
@@ -30,7 +30,7 @@ end
 minetest.register_craftitem("exile_alchemy:salt", {
 	description = S("Salt"),
 	inventory_image = "exile_alchemy_salt.png",
-	stack_max = minimal.stack_max_medium * 2,
+	stack_max = EXILE.stack_max_medium * 2,
 	groups = { flammable = 1 },
 
 	on_use = function(itemstack, user, pointed_thing)
@@ -41,7 +41,7 @@ minetest.register_craftitem("exile_alchemy:salt", {
 minetest.register_craftitem("exile_alchemy:sugar", {
 	description = S("Sugar"),
 	inventory_image = "exile_alchemy_sugar.png",
-	stack_max = minimal.stack_max_medium * 2,
+	stack_max = EXILE.stack_max_medium * 2,
 	groups = { flammable = 1 },
 
 	on_use = function(itemstack, user, pointed_thing)
@@ -54,7 +54,7 @@ register_flammable_item("exile_alchemy:alcohol", S("Alcohol"), "exile_alchemy_al
 minetest.register_craftitem("exile_alchemy:vinegar", {
 	description = S("Vinegar"),
 	inventory_image = "exile_alchemy_vinegar.png",
-	stack_max = minimal.stack_max_medium * 2,
+	stack_max = EXILE.stack_max_medium * 2,
 	groups = { flammable = 1 },
 
 	on_use = function(itemstack, user, pointed_thing)
@@ -66,11 +66,11 @@ minetest.register_craftitem("exile_alchemy:vinegar", {
 minetest.register_craftitem("exile_alchemy:dregs", {
 	description = S("Dregs"),
 	inventory_image = "exile_alchemy_dregs.png",
-	stack_max = minimal.stack_max_medium,
+	stack_max = EXILE.stack_max_medium,
 })
 
 minetest.register_craftitem("exile_alchemy:clear_glass_tube", {
 	description = S("Clear Glass Tube"),
-	inventory_image = "exile_alchemy_glass_vessel_inv.png",
-	stack_max = minimal.stack_max_medium,
+	inventory_image = "exile_alchemy_glass_tube.png",
+	stack_max = EXILE.stack_max_medium,
 })

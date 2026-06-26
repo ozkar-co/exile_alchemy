@@ -94,6 +94,21 @@ local function alembic_has_room(inv, process)
 	return true
 end
 
+function exile_alchemy.alembic_on_infotext(_pos, nodedef, meta, params)
+	params = EXILE.infotext_update_params(meta, params)
+	params.description = nodedef.description
+	params = EXILE.infotext_get_base_params(nil, meta, params)
+	params.status_string = params.status_string or ""
+	params.contents_string = params.contents_string or ""
+	if params.note == "nil" then
+		params.note = nil
+	end
+	return params.status_string
+		.. (params.owner and params.owner ~= "" and "\n" .. params.owner or "")
+		.. (params.contents_string ~= "" and "\n" .. params.contents_string or "")
+		.. (params.note and "\n" .. params.note or "")
+end
+
 function exile_alchemy.update_alembic_infotext(pos)
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
@@ -101,36 +116,34 @@ function exile_alchemy.update_alembic_infotext(pos)
 	local below_node = minetest.get_node(below_pos)
 	local process = exile_alchemy.get_alembic_process(below_node.name)
 	local temp = climate.get_point_temp(below_pos)
-	local infotext_lines = {}
+	local status_string
+	local note
 
 	if process then
+		note = "nil"
 		if not alembic_inv_matches_process(inv, process) then
-			table.insert(infotext_lines, "Status: " .. S("Wrong product in alembic"))
+			status_string = "Status: " .. S("Wrong product in alembic")
 		elseif not alembic_has_room(inv, process) then
-			table.insert(infotext_lines, "Status: " .. S("Alembic full"))
+			status_string = "Status: " .. S("Alembic full")
 		elseif temp > exile_alchemy.alembic_max_temperature then
-			table.insert(infotext_lines, "Status: " .. S("Temperature too high"))
+			status_string = "Status: " .. S("Temperature too high")
 		elseif temp <= exile_alchemy.alembic_working_temperature then
-			table.insert(infotext_lines, "Status: " .. S("Temperature too low"))
+			status_string = "Status: " .. S("Temperature too low")
 		else
-			table.insert(
-				infotext_lines,
-				"Status: " .. S("Processing @1", process.product_label)
-			)
+			status_string = "Status: " .. S("Processing @1", process.product_label)
 		end
 	else
-		table.insert(infotext_lines, "Status: " .. S("Inactive"))
-		table.insert(
-			infotext_lines,
-			"Note: "
-				.. S(
-					"To distill products, place the alembic over a clay pot filled with liquids and apply heat."
-				)
-		)
+		status_string = "Status: " .. S("Inactive")
+		note = "Note: "
+			.. S(
+				"To distill products, place the alembic over a clay pot filled with liquids and apply heat."
+			)
 	end
 
-	table.insert(infotext_lines, "Contents: " .. alembic_contents_text(inv))
-	minimal.infotext_merge(pos, infotext_lines, meta)
+	meta:set_string("status_string", status_string)
+	meta:set_string("contents_string", "Contents: " .. alembic_contents_text(inv))
+	meta:set_string("note", note or "nil")
+	EXILE.infotext_set_new(pos, meta)
 end
 
 function exile_alchemy.alembic_process(pos, elapsed)

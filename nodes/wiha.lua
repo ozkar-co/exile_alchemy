@@ -53,8 +53,8 @@ local function drink_wiha_wine(player)
 	end
 
 	meta:set_int("thirst", 100)
-	meta:set_int("energy", minimal.math_clamp(meta:get_int("energy") + 120, 1000, 0))
-	meta:set_int("hunger", minimal.math_clamp(meta:get_int("hunger") + 40, 1000, 0))
+	meta:set_int("energy", EXILE.math_clamp(meta:get_int("energy") + 120, 1000, 0))
+	meta:set_int("hunger", EXILE.math_clamp(meta:get_int("hunger") + 40, 1000, 0))
 
 	if random() < 0.75 then
 		HEALTH.add_new_effect(player, { "Drunk", 1 })
@@ -74,9 +74,9 @@ local function drink_wiha_cider(player)
 		return false
 	end
 
-	meta:set_int("thirst", minimal.math_clamp(meta:get_int("thirst") + 60, 100, 0))
-	meta:set_int("energy", minimal.math_clamp(meta:get_int("energy") + 40, 1000, 0))
-	meta:set_int("hunger", minimal.math_clamp(meta:get_int("hunger") + 20, 1000, 0))
+	meta:set_int("thirst", EXILE.math_clamp(meta:get_int("thirst") + 60, 100, 0))
+	meta:set_int("energy", EXILE.math_clamp(meta:get_int("energy") + 40, 1000, 0))
+	meta:set_int("hunger", EXILE.math_clamp(meta:get_int("hunger") + 20, 1000, 0))
 
 	exile_alchemy.add_effect(player, "nausea", 1)
 
@@ -93,7 +93,7 @@ local function register_drinkable_pot(pot_name, liquid_source, empty_pot, drink_
 		on_use = function(itemstack, user, pointed_thing)
 			if pointed_thing.type ~= "node" then
 				if minetest.is_player(user) and drink_fn(user) then
-					if minimal.player_in_creative(user) then
+					if EXILE.player_in_creative(user) then
 						return itemstack
 					end
 					return ItemStack(empty_pot)

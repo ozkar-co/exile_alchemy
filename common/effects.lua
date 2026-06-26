@@ -359,9 +359,9 @@ exile_alchemy.register_effect("sugar_overload", {
 
 		local energy = meta:get_int("energy")
 		if severity == 1 then
-			meta:set_int("energy", minimal.math_clamp(energy + random(8, 15), 1000, 0))
+			meta:set_int("energy", EXILE.math_clamp(energy + random(8, 15), 1000, 0))
 		else
-			meta:set_int("energy", minimal.math_clamp(energy - random(12, 22), 1000, 0))
+			meta:set_int("energy", EXILE.math_clamp(energy - random(12, 22), 1000, 0))
 		end
 	end,
 })
