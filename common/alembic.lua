@@ -48,12 +48,6 @@ exile_alchemy.alembic_processes = {
 		time = 150,
 		product_label = S("Acetic Acid"),
 	},
-	["tech:wooden_tang_vinegar"] = {
-		products = { "exile_alchemy:acetic_acid 1" },
-		subproduct = "tech:wooden_water_pot",
-		time = 150,
-		product_label = S("Acetic Acid"),
-	},
 }
 
 function exile_alchemy.get_alembic_process(below_name)

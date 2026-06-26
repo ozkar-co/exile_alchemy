@@ -3,7 +3,6 @@ local modpath = minetest.get_modpath(minetest.get_current_modname())
 exile_alchemy = rawget(_G, "exile_alchemy") or {}
 
 dofile(modpath .. "/nodes/nodeboxes.lua")
-dofile(modpath .. "/common/fermentation.lua")
 dofile(modpath .. "/common/alembic.lua")
 dofile(modpath .. "/common/effects.lua")
 dofile(modpath .. "/items/basic.lua")

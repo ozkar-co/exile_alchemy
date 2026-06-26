@@ -25,7 +25,9 @@ Does **not** modify the base Exile repository.
 3. Fire the unfired alembic like other pottery.
 4. Make **mashed wiha** (6 wiha, mortar and pestle) → **must** (4 mashed + freshwater pot).
 5. Ferment must → wine → **cider** (10–34°C). Cider is wiha vinegar in a pot (`group:vinegar`), like base-game Tang vinegar.
-6. Place the alembic above a vinegar pot with heat to distill **acetic acid** (from wiha cider or `tech:tang_vinegar`).
+6. Place the alembic above a **clay** vinegar pot (`tech:tang_vinegar` or wiha cider) with heat to distill **acetic acid**.
+
+Clay pots only — wooden pots cannot be heated for distillation.
 
 ## Vinegar vs acetic acid
 

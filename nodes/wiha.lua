@@ -4,33 +4,57 @@ local random = math.random
 crafting.register_group_desc("wiha_vinegar", S("Wiha Vinegar"))
 
 local pot_groups = { dig_immediate = 2, pottery = 1, temp_pass = 1, drug = 1 }
+local ferment_time = { min = 300, max = 360 }
+local ferment_temp = { min = 10, max = 34 }
+
+local function wiha_ferment_callbacks(ferment_to)
+	return {
+		_ferment_time = ferment_time,
+		_ferment_temp_range = ferment_temp,
+		_ferment_to = ferment_to,
+		on_construct = function(pos)
+			ncrafting.ferment_on_construct(pos)
+		end,
+		after_place_node = function(pos, placer, itemstack, pointed_thing, nmeta, imeta)
+			ncrafting.ferment_after_place(pos, placer, itemstack, pointed_thing, nmeta, imeta)
+		end,
+		on_timer = function(pos, elapsed)
+			return ncrafting.ferment_on_timer(pos, elapsed)
+		end,
+		preserve_metadata = function(pos, oldnode, oldmeta, drops, imeta)
+			ncrafting.ferment_preserve_metadata(pos, oldnode, oldmeta, drops[1], imeta)
+		end,
+		_preserve_metadata = function(pos, oldnode, oldmeta, transferred_stack)
+			ncrafting.ferment_preserve_metadata(pos, oldnode, oldmeta, transferred_stack)
+		end,
+	}
+end
+
+local function register_wiha_pot(name, liquid, overlay, description, groups, ferment_to)
+	local def = {
+		source = liquid,
+		empty = "tech:clay_water_pot",
+		description = description,
+		add_liquid_tile = overlay,
+		node_box = "container",
+		groups = groups,
+	}
+	if ferment_to then
+		for key, value in pairs(wiha_ferment_callbacks(ferment_to)) do
+			def[key] = value
+		end
+	end
+	liquid_store.register_stored_liquid(name, def)
+end
 
 liquid_store.register_liquid("exile_alchemy:wiha_must_liquid", {
 	flowing = false,
 	force_renew = false,
 })
 
-liquid_store.register_stored_liquid("exile_alchemy:wiha_must_pot", {
-	source = "exile_alchemy:wiha_must_liquid",
-	empty = "tech:clay_water_pot",
-	description = S("Wiha Must (unfermented)"),
-	add_liquid_tile = "exile_alchemy_pot_wiha_must.png",
-	node_box = "container",
-	groups = pot_groups,
-})
-
 liquid_store.register_liquid("exile_alchemy:wiha_wine_liquid", {
 	flowing = false,
 	force_renew = false,
-})
-
-liquid_store.register_stored_liquid("exile_alchemy:wiha_wine_pot", {
-	source = "exile_alchemy:wiha_wine_liquid",
-	empty = "tech:clay_water_pot",
-	description = S("Wiha Wine"),
-	add_liquid_tile = "exile_alchemy_pot_wiha_wine.png",
-	node_box = "container",
-	groups = pot_groups,
 })
 
 liquid_store.register_liquid("exile_alchemy:wiha_cider_liquid", {
@@ -39,27 +63,32 @@ liquid_store.register_liquid("exile_alchemy:wiha_cider_liquid", {
 	groups = { "vinegar", "wiha_vinegar" },
 })
 
-liquid_store.register_stored_liquid("exile_alchemy:wiha_cider_pot", {
-	source = "exile_alchemy:wiha_cider_liquid",
-	empty = "tech:clay_water_pot",
-	description = S("Wiha Cider (Vinegar)"),
-	add_liquid_tile = "exile_alchemy_pot_wiha_cider.png",
-	node_box = "container",
-	groups = { dig_immediate = 2, pottery = 1, temp_pass = 1 },
-})
+register_wiha_pot(
+	"exile_alchemy:wiha_must_pot",
+	"exile_alchemy:wiha_must_liquid",
+	"exile_alchemy_pot_wiha_must.png",
+	S("Wiha Must (unfermented)"),
+	pot_groups,
+	"exile_alchemy:wiha_wine_pot"
+)
 
-exile_alchemy.register_ferment_overrides("exile_alchemy:wiha_must_pot", {
-	on_complete = function(pos)
-		minetest.swap_node(pos, { name = "exile_alchemy:wiha_wine_pot" })
-		exile_alchemy.start_ferment_at(pos)
-	end,
-})
+register_wiha_pot(
+	"exile_alchemy:wiha_wine_pot",
+	"exile_alchemy:wiha_wine_liquid",
+	"exile_alchemy_pot_wiha_wine.png",
+	S("Wiha Wine"),
+	pot_groups,
+	"exile_alchemy:wiha_cider_pot"
+)
 
-exile_alchemy.register_ferment_overrides("exile_alchemy:wiha_wine_pot", {
-	on_complete = function(pos)
-		minetest.swap_node(pos, { name = "exile_alchemy:wiha_cider_pot" })
-	end,
-})
+register_wiha_pot(
+	"exile_alchemy:wiha_cider_pot",
+	"exile_alchemy:wiha_cider_liquid",
+	"exile_alchemy_pot_wiha_cider.png",
+	S("Wiha Cider (Vinegar)"),
+	{ dig_immediate = 2, pottery = 1, temp_pass = 1 },
+	nil
+)
 
 local function drink_wiha_wine(player)
 	local meta = player:get_meta()
